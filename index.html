@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NIS — Neural Network Trainer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button id="menuToggle" onclick="document.getElementById('sidebar').classList.toggle('open')" aria-label="Toggle menu">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+</button>
+
+<!-- ══ SIDEBAR ══ -->
+<aside id="sidebar">
+  <div class="sb-header">
+    <div class="sb-logo-wrap">
+      <img src="nis_logo.png" alt="NIS" class="sb-logo-img">
+    </div>
+    <div class="sb-school-name">Namangan International School</div>
+    <div class="sb-app-tag">Neural Network Trainer</div>
+  </div>
+
+  <nav class="sb-nav">
+    <div class="sb-section">Interactive Lessons</div>
+
+    <button class="game-item active" id="nav1" onclick="switchGame(1)">
+      <div class="gnum" style="background:rgba(52,211,153,.15);color:#34d399;">1</div>
+      <div class="g-info">
+        <div class="g-title">Guruhga bo'lish</div>
+        <div class="g-sub">Group Division</div>
+      </div>
+      <svg class="g-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+
+    <button class="game-item" id="nav2" onclick="switchGame(2)">
+      <div class="gnum">2</div>
+      <div class="g-info">
+        <div class="g-title">Training Steps</div>
+        <div class="g-sub">Order the pipeline</div>
+      </div>
+      <svg class="g-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+
+    <button class="game-item" id="nav3" onclick="switchGame(3)">
+      <div class="gnum">3</div>
+      <div class="g-info">
+        <div class="g-title">Data Types</div>
+        <div class="g-sub">Flip & learn Python types</div>
+      </div>
+      <svg class="g-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+
+    <button class="game-item" id="nav4" onclick="switchGame(4)">
+      <div class="gnum" style="background:rgba(244,114,182,.15);color:#f9a8d4;">4</div>
+      <div class="g-info">
+        <div class="g-title">Fake or Real?</div>
+        <div class="g-sub">Spot the AI face</div>
+      </div>
+      <svg class="g-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+
+    <div class="sb-section" style="margin-top:24px;">Coming Soon</div>
+
+    <button class="game-item locked" disabled>
+      <div class="gnum" style="opacity:.4;">4</div>
+      <div class="g-info">
+        <div class="g-title">Optimizers</div>
+        <div class="g-sub">Compare SGD, Adam, RMSprop</div>
+      </div>
+      <svg class="g-lock" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+    </button>
+
+    <button class="game-item locked" disabled>
+      <div class="gnum" style="opacity:.4;">5</div>
+      <div class="g-info">
+        <div class="g-title">Architectures</div>
+        <div class="g-sub">Build your own network</div>
+      </div>
+      <svg class="g-lock" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+    </button>
+  </nav>
+
+  <div class="sb-footer">
+    <div class="sb-hint">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+      Game 1 requires a password to unlock.
+    </div>
+    <div class="sb-copy">© 2026 NIS Computer Science</div>
+  </div>
+</aside>
+
+<!-- ══ GAME AREA ══ -->
+<div id="gameArea">
+
+  <!-- ── GAME 1: GURUHGA BO'LISH ── -->
+  <div id="g1" class="gscreen active">
+    <div class="g1-bg"></div>
+    <div class="g1-wrap">
+      <div class="g1-card">
+        <div class="g1-card-glow"></div>
+        <img src="nis_logo.png" class="g1-logo" alt="NIS Logo">
+        <div class="g1-school">Namangan International School</div>
+        <div class="g1-sub">Sun'iy Intellekt Ochiq darsi uchun</div>
+        <div class="g1-divider"></div>
+        <div class="g1-title">7-sinf "B" guruh o'quvchilar ro'yxati</div>
+
+        <div class="g1-pool" id="g1Pool">
+          <div class="g1-pool-label">Barcha o'quvchilar</div>
+          <div class="g1-students" id="g1Students">
+            <span>Bahriniso</span>
+            <span>Abdulloh</span>
+            <span>Gulmira</span>
+            <span>Mushtariy</span>
+            <span>Shaxboz</span>
+            <span>Hojiakbar</span>
+            <span>Abdulbosit</span>
+            <span>Dilrabo</span>
+            <span>Shoxjahon</span>
+            <span>Madina</span>
+            <span>Ruhshona</span>
+          </div>
+        </div>
+
+        <button class="g1-shuffle-btn" id="g1ShuffleBtn" onclick="shuffleTeams()">Guruhga bo'lish</button>
+
+        <div class="g1-results" id="g1Results">
+          <div class="g1-result-team">
+            <div class="g1-result-label g1-team-a">A guruhi</div>
+            <div class="g1-result-names" id="g1TeamA"></div>
+          </div>
+          <div class="g1-result-team">
+            <div class="g1-result-label g1-team-b">B guruhi</div>
+            <div class="g1-result-names" id="g1TeamB"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /g1 -->
+
+  <!-- ── GAME 1: TRAINING STEPS ── -->
+  <div id="g2" class="gscreen">
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- Lock Overlay -->
+    <div id="lockOverlay">
+      <div class="lock-card">
+        <div class="lock-icon-wrap">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        </div>
+        <h2 class="lock-title">Training Steps</h2>
+        <p class="lock-desc">Enter the password to begin the lesson</p>
+        <div class="lock-input-wrap">
+          <input type="password" id="passInput" placeholder="Password" autocomplete="off">
+          <button id="unlockBtn" onclick="tryUnlock()">Unlock</button>
+        </div>
+        <div id="passErr">Incorrect password. Try again.</div>
+      </div>
+    </div>
+
+    <!-- Banner -->
+    <div class="nis-banner">
+      <img src="nis_logo.png" alt="NIS Logo">
+      <div class="nis-banner-text">Namangan International School</div>
+      <div class="nis-banner-sub">Sun'iy Intellekt Ochiq darsi uchun</div>
+    </div>
+
+    <!-- Header -->
+    <div class="game-header">
+      <div class="gh-left">
+        <span class="gh-badge">Game 1</span>
+        <h1 class="gh-title">Training Steps</h1>
+      </div>
+      <div class="gh-hint">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+        Drag cards into the numbered slots, then check your answer
+      </div>
+    </div>
+
+    <!-- Tray -->
+    <div id="tray">
+      <div class="tray-ghost" data-i="0"></div>
+      <div class="tray-ghost" data-i="1"></div>
+      <div class="tray-ghost" data-i="2"></div>
+      <div class="tray-ghost" data-i="3"></div>
+      <div class="tray-ghost" data-i="4"></div>
+    </div>
+
+    <!-- Slots -->
+    <div id="slotsBar"></div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button id="checkBtn">Check Order</button>
+      <div id="toast"></div>
+    </div>
+
+    <!-- Success Overlay -->
+    <div id="successOverlay">
+      <div class="success-card">
+        <div class="success-emoji">🎉</div>
+        <h2 class="success-title">Model Training Complete!</h2>
+        <p class="success-desc">You ordered the steps correctly. Watch the model learn.</p>
+
+        <div class="pills" id="pillsBar"></div>
+
+        <div class="metrics">
+          <div class="metric">
+            <div class="metric-label">Epoch</div>
+            <div class="metric-value" id="epNum">0</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Accuracy</div>
+            <div class="metric-value" id="accNum">0%</div>
+          </div>
+        </div>
+
+        <div class="charts">
+          <div class="chart-wrap">
+            <div class="chart-label">Loss</div>
+            <canvas id="lossC" width="320" height="160"></canvas>
+          </div>
+          <div class="chart-wrap">
+            <div class="chart-label">Accuracy</div>
+            <canvas id="accC" width="320" height="160"></canvas>
+          </div>
+        </div>
+
+        <button class="btn-again" id="btnAgain">↺ Play Again</button>
+      </div>
+    </div>
+  </div><!-- /g2 -->
+
+
+  <!-- ── GAME 2: DATA TYPES ── -->
+  <div id="g3" class="gscreen">
+    <div class="game-header">
+      <div class="gh-left">
+        <span class="gh-badge" style="background:rgba(244,114,182,.15);color:#f9a8d4;">Game 2</span>
+        <h1 class="gh-title">Data Types</h1>
+      </div>
+      <div class="gh-hint">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+        Click a card to reveal its Python type
+      </div>
+    </div>
+
+    <div class="nis-banner" style="top:100px;">
+      <img src="nis_logo.png" alt="NIS Logo">
+      <div class="nis-banner-text">Namangan International School</div>
+    </div>
+
+    <div class="dc-grid">
+      <div class="dc" style="--r:59;--g:130;--b:246" onclick="this.classList.toggle('flipped')">
+        <div class="dc-inner">
+          <div class="dc-front"><span class="dc-icon">?</span></div>
+          <div class="dc-back">
+            <div class="dc-back-top">
+              <div class="dc-name">Integer</div>
+              <div class="dc-pytype">int</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dc" style="--r:16;--g:185;--b:129" onclick="this.classList.toggle('flipped')">
+        <div class="dc-inner">
+          <div class="dc-front"><span class="dc-icon">?</span></div>
+          <div class="dc-back">
+            <div class="dc-back-top">
+              <div class="dc-name">String</div>
+              <div class="dc-pytype">str</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dc" style="--r:245;--g:158;--b:11" onclick="this.classList.toggle('flipped')">
+        <div class="dc-inner">
+          <div class="dc-front"><span class="dc-icon">?</span></div>
+          <div class="dc-back">
+            <div class="dc-back-top">
+              <div class="dc-name">Float</div>
+              <div class="dc-pytype">float</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dc" style="--r:139;--g:92;--b:246" onclick="this.classList.toggle('flipped')">
+        <div class="dc-inner">
+          <div class="dc-front"><span class="dc-icon">?</span></div>
+          <div class="dc-back">
+            <div class="dc-back-top">
+              <div class="dc-name">Dictionary</div>
+              <div class="dc-pytype">dict</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dc" style="--r:236;--g:72;--b:153" onclick="this.classList.toggle('flipped')">
+        <div class="dc-inner">
+          <div class="dc-front"><span class="dc-icon">?</span></div>
+          <div class="dc-back">
+            <div class="dc-back-top">
+              <div class="dc-name">Complex</div>
+              <div class="dc-pytype">complex</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dc" style="--r:107;--g:114;--b:128" onclick="this.classList.toggle('flipped')">
+        <div class="dc-inner">
+          <div class="dc-front"><span class="dc-icon">?</span></div>
+          <div class="dc-back">
+            <div class="dc-back-top">
+              <div class="dc-name">None</div>
+              <div class="dc-pytype">NoneType</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dc" style="--r:239;--g:68;--b:68" onclick="this.classList.toggle('flipped')">
+        <div class="dc-inner">
+          <div class="dc-front"><span class="dc-icon">?</span></div>
+          <div class="dc-back">
+            <div class="dc-back-top">
+              <div class="dc-name">List</div>
+              <div class="dc-pytype">list</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dc" style="--r:249;--g:115;--b:22" onclick="this.classList.toggle('flipped')">
+        <div class="dc-inner">
+          <div class="dc-front"><span class="dc-icon">?</span></div>
+          <div class="dc-back">
+            <div class="dc-back-top">
+              <div class="dc-name">Tuple</div>
+              <div class="dc-pytype">tuple</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dc" style="--r:6;--g:182;--b:212" onclick="this.classList.toggle('flipped')">
+        <div class="dc-inner">
+          <div class="dc-front"><span class="dc-icon">?</span></div>
+          <div class="dc-back">
+            <div class="dc-back-top">
+              <div class="dc-name">Set</div>
+              <div class="dc-pytype">set</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dc" style="--r:132;--g:204;--b:16" onclick="this.classList.toggle('flipped')">
+        <div class="dc-inner">
+          <div class="dc-front"><span class="dc-icon">?</span></div>
+          <div class="dc-back">
+            <div class="dc-back-top">
+              <div class="dc-name">Boolean</div>
+              <div class="dc-pytype">bool</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /dc-grid -->
+  </div><!-- /g3 -->
+
+
+  <!-- ── GAME 3: FAKE OR REAL ── -->
+  <div id="g4" class="gscreen">
+    <div class="g3-bg"></div>
+    <div class="g3-wrap">
+      <div class="g3-card">
+        <div class="g3-card-glow"></div>
+        <img src="nis_logo.png" class="g3-logo" alt="NIS Logo">
+        <div class="g3-school">Namangan International School</div>
+        <div class="g3-sub">Sun'iy Intellekt Ochiq darsi uchun</div>
+        <div class="g3-divider"></div>
+        <div class="g3-emoji">🤔</div>
+        <div class="g3-title">Fake or Real?</div>
+        <div class="g3-desc">
+          AI can now generate faces that look incredibly real.<br>
+          Can you spot the difference between a real photo and an AI-generated one?<br>
+          Test your skills — look at the eyes, ears, and background carefully!
+        </div>
+        <a href="https://www.whichfaceisreal.com/index.php" target="_blank" class="g3-btn">
+          <span>Launch Challenge</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        </a>
+      </div>
+    </div>
+  </div><!-- /g4 -->
+
+</div><!-- /gameArea -->
+
+<div id="confLayer"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
