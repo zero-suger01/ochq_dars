@@ -477,6 +477,15 @@ window.addEventListener('resize', () => {
    GAME 1: VALIDATION & SUCCESS
    ═══════════════════════════════════════ */
 $('checkBtn').addEventListener('click', () => {
+  const btn = $('checkBtn');
+
+  if (btn.dataset.mode === 'reset') {
+    resetTraining();
+    btn.dataset.mode = 'check';
+    btn.textContent = 'Check Order';
+    return;
+  }
+
   const placed = chips.filter(c => c.slotPos !== null);
   if (placed.length < 5) {
     showToast('Place all 5 cards into the slots first!', 'err');
@@ -493,12 +502,28 @@ $('checkBtn').addEventListener('click', () => {
         setTimeout(() => slot.classList.remove('wrong'), 600);
       }
     });
+    btn.dataset.mode = 'reset';
+    btn.textContent = '↺ Try Again';
     return;
   }
 
   showToast('Perfect! All steps are in the correct order!', 'ok');
   launchSuccess();
+  btn.dataset.mode = 'reset';
+  btn.textContent = '↺ Try Again';
 });
+
+function resetTraining() {
+  if (trainTimer) clearInterval(trainTimer);
+  $('successOverlay').classList.remove('show');
+  $('toast').classList.remove('show');
+  chips.forEach(c => {
+    c.slotPos = null;
+    moveCard(c.el, c.homeX, c.homeY);
+  });
+  slots.forEach(s => s.classList.remove('filled', 'wrong'));
+  setTimeout(buildCards, 200);
+}
 
 function showToast(msg, type) {
   const t = $('toast');
